@@ -1,0 +1,80 @@
+import random
+
+bunny_male = []
+bunny_female = []
+
+#init
+males = random.randrange(1, 4, 1)
+females = random.randrange(1, 3, 1)
+for i in range(males):
+    bunny_male.append(random.randrange(1, 100, 1))
+for i in range(females):
+    bunny_female.append(random.randrange(1, 100, 1))
+
+def populate():
+    global bunny_male
+    global bunny_female
+    bunny_male[0] -= 20
+    bunny_female[0] -= 50
+    if bunny_male[0] <= 0:
+        bunny_male.pop(0)
+        print('a male bunny died (' + str(len(bunny_male)) + ' surviving)')
+    if bunny_female[0] <= 0:
+        bunny_female.pop(0)
+        print('a female bunny died (' + str(len(bunny_female)) + ' surviving)')
+    males = random.randrange(0, 4)
+    females = random.randrange(0, 3)
+    print(str(males) + ' male bunnies were born')
+    print(str(females) + ' female bunnies were born')
+    for i in range(males):
+        bunny_male.append(random.randrange(1, 100, 1))
+    for i in range(females):
+        bunny_female.append(random.randrange(1, 100, 1))
+
+def oops():
+    global bunny_male
+    bunny_male[0] -= 20
+    print('a male bunny got overexcited')
+    if bunny_male[0] <= 0:
+        bunny_male.pop(0)
+        print('a male bunny died (' + str(len(bunny_male)) + ' surviving)')
+
+def breed():
+    generations = 0
+    bunnies = False
+    if len(bunny_male) > 0 and len(bunny_female) > 0:
+        bunnies = True
+    else:
+        bunnies = False
+    while bunnies == True:
+        #coin toss
+        coin = random.randrange(0, 1, 1)
+        if coin == 1:
+            oops()
+        if coin == 0:
+            populate()
+        #nature
+        coin = random.randrange(0, 9, 1)
+        if coin == 0:
+            n = random.randrange(10, 15, 1)
+            for i in range(n):
+                try:
+                    bunny_male.pop(0)
+                    print('a male bunny was murdered (' + str(len(bunny_male)) + ' surviving)')
+                    if len(bunny_male) == 0:
+                        print('no more surviving male bunnies (' + str(len(bunny_female)) + ' bunny widows)')
+                        break
+                except:
+                    print('no more surviving male bunnies (' + str(len(bunny_female)) + ' bunny widows)')
+        if bunny_male and bunny_female:
+            bunnies = True
+        else:
+            bunnies = False
+            if len(bunny_female) == 0:
+                print('no more surviving female bunnies (' + str(len(bunny_male)) + ' bunny males)')
+        generations += 1
+    print(str(generations) + ' bunny generations survived')
+
+
+
+breed()
